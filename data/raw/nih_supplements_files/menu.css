@@ -1,0 +1,486 @@
+﻿
+/* ================================================ */
+/* Top navigation and Fact Sheet Reading Level tabs */
+/* ================================================ */
+#topnav {
+	padding:0px;
+	position:absolute;
+	bottom:0px;
+}
+
+
+#topnav li li {
+    position: relative;
+    top: auto;
+}
+
+
+/* ---------------------------------------------------- */
+/* GLOBAL NAV
+/* ---------------------------------------------------- */
+
+#gnav {
+    padding:0px;
+	margin:0px;
+    height: 44px;
+    width:800px;
+	z-index: 10;
+    -webkit-border-radius: 8px 8px 0px 0px;
+    -moz-border-radius: 8px 8px 0px 0px;
+    border-radius: 8px 8px 0px 0px;
+    background-image: -ms-linear-gradient(top, #2C72B7 0%, #104273 100%);
+    background-image: -moz-linear-gradient(top, #2C72B7 0%, #104273 100%);
+    background-image: -o-linear-gradient(top, #2C72B7 0%, #104273 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2C72B7), color-stop(100, #104273));
+    background-image: -webkit-linear-gradient(top, #2C72B7 0%, #104273 100%);
+    background-image: linear-gradient(to bottom, #2C72B7 0%, #104273 100%);
+}
+
+#gnav {
+	position: relative;
+	list-style-image: none;
+	list-style-type: none;
+}
+#gnav a {
+    color:hsl(210, 62%, 33%);
+}
+#gnav ul {
+    list-style-image: none;
+    list-style-type: none;
+    padding:0;
+}
+#gnav.sticky li {
+    position: relative;
+    float:left;
+    display: inline-block;
+    left: 0px !important;
+}
+#gnav li {
+	position: absolute;
+	top: 0;
+	height: 44px;
+	padding: 0;
+	margin: 0;
+	background: none;
+    border-right:1px solid #fff;    
+    z-index: 100;
+}
+#gnav li:nth-of-type(6) {
+    border-right:none;
+}
+#gnav li a:hover {
+    text-decoration: none;
+}
+#gnav li li {
+    border-right:none;
+    position:relative;
+    height:auto;
+    padding-bottom:10px;
+    float:left;
+    clear:both;
+}
+    #gnav li li a {
+        float:left;
+        text-decoration: none;
+    }
+    #gnav li li a:hover {
+        color:red;
+    }
+    #gnav li li span {
+        float:left;
+        clear:both;
+        padding-left:20px;
+    }
+
+#gnav li .atab {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 44px;
+	z-index: 30;
+    width: 100%;
+}
+
+    #gnav li .atab a.lnk {
+        display: none;
+        color:#a00000 !important;
+        padding-top:11px;
+        float:left;
+    }
+    #gnav li .atab a.lnk:hover {
+        text-decoration:underline;
+    }
+#gnav a:visited {
+    color: hsl(210, 62%, 33%);
+}
+#gnav a:hover {
+	color: red;
+}
+#gnav div.atab a {
+	display: block;
+	height: 45px;
+    padding: 10px 0 0 14px;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: normal;
+}
+#gnav div.atab a span:hover, #gnav div.atab a:hover span {
+	color:#002e5a !important;
+    text-decoration:none;
+}
+
+
+    #gnav #tab-first {
+        width: 168px;
+        left: 0;
+    }
+
+        #gnav #tab-first.hover-on {
+            -webkit-border-radius: 8px 0px 0px 0px;
+            -moz-border-radius: 8px 0px 0px 0px;
+            border-radius: 8px 0px 0px 0px;
+        }
+
+    #gnav #tab-second {
+        width: 141px;
+        left: 169px;
+    }
+
+        #gnav #tab-second.show .atab {
+        }
+
+    #gnav #tab-third {
+        width: 183px;
+        left: 311px;
+    }
+
+        #gnav #tab-third.show .atab {
+        }
+
+    #gnav #tab-fourth {
+        width: 166px;
+        left: 494px;
+    }
+
+    #gnav #tab-fifth {
+        width: 125px;
+        left: 663px;
+    }
+
+        #gnav #tab-fifth.hover-on {
+            -webkit-border-radius: 0px 8px 0px 0px;
+            -moz-border-radius: 0px 8px 0px 0px;
+            border-radius: 0px 8px 0px 0px;
+        }
+
+    #gnav li.pad {
+        padding:0 20px;
+    }
+    #gnav li.logo {
+        padding:0 20px;
+        border-right: none !important;
+    }
+        .onscroll {
+            display: none;
+        }
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+
+#gnav.sticky {
+    position: fixed;
+    top: 0;
+    left: 40px;
+    width: 101%;
+    background-color: #1f5489;
+    margin-left: calc(-100vw / 2 + 95% / 2);
+    margin-right: calc(-100vw / 2 + 95% / 2);
+    border-radius: 0 !important;
+    border-bottom: 1px solid #1f5489;
+}
+/* We need to offset anchors a bit so when the browser scrolls to them, they aren't hidden under #gnav 
+    edit -- this is now handled with jQuery in site.master
+*/
+/*.anchor {
+    margin-top: -70px;
+    padding-top: 70px;
+}
+a[name] {
+    top: -75px;
+    display: block;
+    position: relative;
+    visibility: hidden;
+}*/
+
+
+#fnav {
+    width: 100%;
+}   
+    #fnav .first a {
+        font-size: 12px;
+        text-decoration: none;
+    }
+    #fnav .block b, #fnav .first b {
+        /*text-transform: uppercase;*/
+        font-size: 14px;
+    }
+        #fnav .block b a, #fnav .first b a {
+            color: #333333;
+            text-decoration: none;
+        }
+    #fnav .block ul, #fnav .first ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 5px 0 20px;
+    }
+        #fnav .block ul li a, #fnav .block ul li a:visited, #fnav .first ul li a:visited {
+            font-size: 12px;
+            color: #333333 !important;
+            text-decoration: none;
+        }
+@media (min-width: 700px) {
+    .grid {
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+        grid-auto-rows: 150px;
+    }
+
+        .grid .block, .grid .first {
+            padding: 20px 0 0 30px;
+            text-indent: -10px;
+            margin-right: .5em;
+        }
+
+            .grid .first {
+                grid-column-end: 2;
+                grid-row-end: span 4;
+            }
+}
+
+@media (max-width: 1380px) {
+    #gnav.sticky #nav-search .txt_search {
+        width: 50%;
+    }
+    #gnav li:last-of-type.pad {
+        padding: 0;
+    }
+}
+@media (max-width: 1286px) {
+
+    #gnav li.whitebg {
+        padding: 0 10px;
+    }
+    #gnav li.pad {
+        padding: 0;
+    }
+
+
+}
+@media (max-width: 1100px) {
+    .grid .first {
+        grid-row-end: span 10;
+    }
+}
+@media (max-width: 1160px) {
+
+    #nav-search {
+        display: none;
+    }
+}
+    /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+    .sticky + #container {
+        padding-top: 102px;
+    }
+
+    /* ---------------------------------------------------- */
+    /* GLOBAL NAV > MEGA MENUS
+/* ---------------------------------------------------- */
+
+    div.megamenu.hidden {
+        display: none !important;
+    }
+
+    #gnav .megamenu {
+        position: absolute;
+        top: 39px;
+        left: -5px;
+        padding: 18px 18px 7px 20px;
+        background: #fff;
+        border: 5px solid hsl(210, 62%, 33%);
+        border-top: none;
+        -moz-border-radius-bottomleft: 7px;
+        border-bottom-left-radius: 7px;
+        -moz-border-radius-bottomright: 7px;
+        border-bottom-right-radius: 7px;
+        z-index: 8;
+        -webkit-box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
+        box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
+    }
+
+        #gnav .megamenu::after {
+            border-top: 5px solid hsl(210, 62%, 33%);
+            content: '';
+            display: block;
+            position: absolute;
+            right: 0;
+            width: 781px;
+            top: 0px;
+        }
+
+    #gnav div.atab a {
+        height: auto;
+    }
+
+    #gnav .hover-on {
+        text-decoration: none;
+        background: #fff !important;
+        border: 5px solid hsl(210, 62%, 33%) !important;
+        border-bottom: none !important;
+    }
+
+        #gnav .hover-on div.atab a {
+            color: #002e5a;
+        }
+
+
+    #gnav .megamenu .leftcol {
+        float: left;
+        padding-right: 20px;
+        width: 175px;
+        border-right: 1px solid #d7d7d7;
+        display: table-cell;
+        min-height: inherit;
+    }
+
+    #gnav .megamenu .rightcol {
+        float: left;
+        padding-left: 20px;
+        width: 175px;
+        display: table-cell;
+    }
+
+    .leftcol.wide {
+        width: 100%;
+        border-right: none;
+    }
+
+#gnav #tab-first .megamenu {
+    min-width: 400px;
+}
+
+    #gnav #tab-first .megamenu::after {
+        width: 270px;
+    }
+
+#gnav #tab-second .megamenu {
+    min-width: 400px;
+}
+
+    #gnav #tab-second .megamenu::after {
+        width: 297px;
+    }
+
+#gnav #tab-third .megamenu {
+    width: 400px;
+}
+
+    #gnav #tab-third .megamenu::after {
+        width: 255px;
+    }
+
+#gnav #tab-fourth .megamenu {
+    min-width: 275px;
+}
+
+    #gnav #tab-fourth .megamenu::after {
+        width: 147px;
+    }
+
+#gnav #tab-fifth .megamenu {
+    min-width: 275px;
+}
+
+    #gnav #tab-fifth .megamenu::after {
+        width: 188px;
+    }
+
+#gnav #tab-fifth .megamenu {
+    clear: both;
+    padding-bottom: 10px;
+}
+
+
+.clearfix {
+    overflow: auto;
+}
+
+    .clearfix:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+
+@media (max-width: 700px) {
+
+    .logo.mob {
+        margin: 0px 0 20px;
+    }
+    .icons:nth-of-type(2) {
+        margin-left: 0;
+        padding-top: 0;
+    }
+    #fnav {
+        width: 100%;
+        max-width: 100%;
+    }
+    #footer {
+        padding-left: 20px;
+        width: calc(100% - 20px);
+    }
+    #fnav ul {
+        display: none;
+    }
+    #fnav .first ul {
+        display: block;
+    }
+    #fnav .block, #fnav .first {
+        width: 95%;
+        text-align: left;
+        padding-left: 0;
+        border-top: 1px solid hsl(210, 62%, 85%);
+        padding: 15px 0;
+    }
+    #fnav .first {
+        border-top: none;
+    }
+    #fnav .block b {
+    
+    }
+    #footertext {
+        width: auto !important;
+        padding-left: 0;
+        padding-top: 0;
+    }
+
+    .plus {
+        float:right;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(#000,#000), linear-gradient(#000,#000), #fff;
+        background-position: center;
+        background-size: 50% 2px,2px 50%; /*thickness = 2px, length = 50% (25px)*/
+        background-repeat: no-repeat;
+    }
+    .minus {
+        float: right;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        background: linear-gradient(#000,#000), #fff;
+        background-position: center;
+        background-size: 50% 2px;
+        background-repeat: no-repeat;
+    }
+}

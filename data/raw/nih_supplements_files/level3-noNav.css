@@ -1,0 +1,11 @@
+﻿#main 
+{
+	width: 100%;
+    margin-left: 0;
+}
+.center img {
+	max-width: 1170px;
+}
+#mobilemenusub {
+    display:none !important;
+}

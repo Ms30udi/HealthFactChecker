@@ -1,0 +1,57 @@
+﻿$(function () {
+    // setup ul.tabs to work as tabs for each div directly under div.panes
+    $("ul.tabs").tabs("div.panes > div");
+
+    window.addEventListener('click', function (e) {
+        var menu = document.getElementById('gnav');
+        // close the menu if you click on anything that's not the menu
+        if (e.target !== menu && !menu.contains(e.target)) {
+            $('.megamenu').addClass('hidden');
+        }
+    });
+
+    $('#gnav .atab').on('click', function () {
+        var megamenu = $(this).siblings('.megamenu');
+        if (megamenu[0]) {
+            if ($(megamenu).hasClass('hidden')) {
+                $(megamenu).removeClass('hidden');
+            } else {
+                $(megamenu).addClass('hidden');
+            }
+        }
+        $('.megamenu').not(megamenu).addClass('hidden');
+    });
+
+    $(window).scroll(function () {    
+        var height = $(window).scrollTop();  
+        if (height > 236) {
+            $("#gnav").addClass("sticky");
+            $(".onscroll").show();
+        } else {
+            $("#gnav").removeClass("sticky");
+            $(".onscroll").hide();
+        }
+    });
+    $(".searchbox").keypress(function (e) {
+        var key = (event.keyCode ? event.keyCode : event.which);
+        if (key == 13) 
+        {
+            $('.searchbtn').click();
+            return false;
+        }
+    });
+    $(".block").click(function () {
+        var width = $(window).width();
+        if (width < 700) {
+            var ul = $(this).find("ul");
+            if (ul.is(":visible")) {
+                $(this).find("ul").hide();
+                $(this).find(".opener").removeClass("minus").addClass("plus")
+            } else {
+                $(this).find("ul").show();
+                $(this).find(".opener").removeClass("plus").addClass("minus")
+            }
+        }
+    });
+
+});

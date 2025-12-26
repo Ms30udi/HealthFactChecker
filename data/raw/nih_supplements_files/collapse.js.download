@@ -1,0 +1,205 @@
+﻿$(document).ready(function () {
+    /**
+     * Initializes collapsible sections within the document.
+     * It sets up collapsible behavior for headings within the #fact-sheet element
+     * and within elements with the class .supplement-inset-box.
+     */
+    var minHeading = 2; // minimum heading to make collapsible (2 for h2, 3 for h3, etc.)
+    var maxHeading = 3; // styles only support up to h4 currently, edit factsheets.css to add more
+    for (var i = minHeading; i <= maxHeading; i++) {
+        wrapContent("#fact-sheet h", i);
+    }
+
+    // factsheets/list-all 
+    wrapContent(".supplement-inset-box>div>h", 2)
+
+    // references and disclaimer
+    wrapContent("[id$=divCitations] h", 2)
+    wrapContent("[id$=divDisclaimer] h", 2)
+
+    var factSheetTitle = document.querySelector("#fstitleborder")
+    if (!!factSheetTitle) {
+        // Determine type of fact sheet
+        var superTitle = document.querySelector("[id$='lblSuperTitle']")
+        var isSpanishFS = superTitle?.innerText.indexOf("consumidores") > -1;
+
+        var expandAllText = isSpanishFS ? "Expandir todas" : "Expand All"
+        var collapseAllText = isSpanishFS ? "Contraer todas" : "Collapse All"
+        var expandAllSectionsText = isSpanishFS ? "Expandir todas las secciones" : "Expand all sections"
+        var collapseAllSectionsText = isSpanishFS ? "Contraer todas las secciones" : "Collapse all sections"
+
+        // inject expand/collapse all button
+        var expandall = document.createElement("div")
+        expandall.id = "expandall"
+        expandall.innerText = expandAllText
+        expandall.role = "button"
+        expandall.tabIndex = 0
+        expandall.ariaPressed = "false"
+        expandall.classList = "expandall-collapsed"
+        expandall.title = expandAllSectionsText
+        factSheetTitle.appendChild(expandall)
+
+        // expand/collapse all button behavior
+        expandall.addEventListener("click", function () {
+            if (this.ariaPressed !== "true") {
+                document.querySelectorAll(".collapsible.heading-collapsed").forEach(c => c.click())
+                this.innerText = collapseAllText
+                this.classList = ""
+                this.ariaPressed = "true"
+                this.title = collapseAllSectionsText
+            } else {
+                document.querySelectorAll(".collapsible:not(.heading-collapsed)").forEach(c => c.click())
+                this.innerText = expandAllText
+                this.classList = "expandall-collapsed"
+                this.ariaPressed = "false"
+                this.title = expandAllSectionsText
+            }
+        });
+
+        expandall.addEventListener("keydown", function (e) {
+            if (e.key == "Enter" || e.key == " " || e.key == "Spacebar") {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    }
+
+}); // end document.ready
+
+/**
+ * Convert the element in place to different type. Copies attributes and children.
+ * Imagine if .tagName wasn't read-only.
+ * @param {string} newTagName - The tagName of the element to convert to.
+ */
+Element.prototype.convertTo = function (newTagName) {
+    let node = this;
+    const newElement = document.createElement(newTagName);
+
+    // Copy attributes
+    for (let i = 0; i < node.attributes.length; i++) {
+        const attribute = node.attributes[i];
+        newElement.setAttribute(attribute.name, attribute.value);
+    }
+
+    // Move children
+    while (node.firstChild) {
+        newElement.appendChild(node.firstChild);
+    }
+
+    // Replace the element
+    node.replaceWith(newElement);
+}
+
+/**
+ * Wraps content between headings of a specified level in a div for collapsible functionality.
+ * @param {string} headingSelector - The CSS selector for the headings to be made collapsible.
+ * @param {number} headingLevel - The heading level (e.g., 2 for h2) to be made collapsible.
+ */
+function wrapContent(headingSelector, headingLevel) {
+
+    var headings = document.querySelectorAll(headingSelector + headingLevel)
+
+    // wrap all the content between headings in divs
+    for (var i = 0; i < headings.length; i++) {
+        var heading = headings[i];
+        var wrapper = document.createElement("div");
+
+        // get the heading id, assign one if unset
+        var headingId = heading.id;
+        if (headingId == '') {
+            headingId = "heading-" + i;
+            heading.id = headingId;
+        }
+
+        var wrapperId = `content-${headingLevel}-${i}`;
+
+        // move all of the content into the wrapper
+        while (!!heading.nextSibling && heading.nextSibling.nodeName != "H" + headingLevel) {
+            wrapper.appendChild(heading.nextSibling); // this removes the node
+        }
+
+        // insert the new div after the heading
+        heading.parentNode.insertBefore(wrapper, heading.nextSibling)
+
+        var lowerText = heading.innerText.toLowerCase()
+        var isIntro = lowerText.startsWith("intro") || lowerText.indexOf(" intro") > -1
+
+        // Get the state of things
+        var hasSummary = wrapper.firstElementChild.classList.contains("factsheet-summary");
+        var superTitle = document.querySelector("[id$='lblSuperTitle']")
+        var isProfessionalFS = superTitle?.innerText.indexOf("Professionals") > -1;
+        var isRefOrDisc = heading.id === "ref" || heading.id === "disc";
+
+        //console.log(`${lowerText}
+        //hasSummary: ${hasSummary}
+        //isIntro: ${isIntro}
+        //isProfessionalFS: ${isProfessionalFS}
+        //isRefOrDisc: ${isRefOrDisc}`)
+
+        if (hasSummary && !isIntro || !isProfessionalFS || isRefOrDisc) {
+            // set up the wrapper and heading for collapsible behavior
+            heading.role = "tab";
+            heading.setAttribute("aria-controls", wrapperId);
+            heading.ariaExpanded = true;
+            heading.tabIndex = 0;
+
+            wrapper.id = wrapperId;
+            wrapper.setAttribute("aria-labelledby", headingId); // yes that's the correct aria attribute spelling
+            wrapper.role = "term";
+            wrapper.classList.add("collapsible-content");
+
+            // make the headers collapsible 
+            heading.classList.add("collapsible");
+            heading.addEventListener("click", function (e) {
+                var tgt = e.target;
+
+                // make sure the target is a heading, not a span or em or whatnot
+                tgt = $(tgt).closest("h2, h3")[0]
+
+                // you'd think   = !tgt.ariaExpanded;            would work, but you'd be wrong.
+                tgt.ariaExpanded = tgt.ariaExpanded === "false";
+                tgt.classList.toggle("heading-collapsed");
+
+                // adjust the state because clicking will fire the listener
+                var details = tgt.nextSibling
+                details.open = !details.open
+            });
+
+            heading.addEventListener("keydown", function (e) {
+                if (e.key == "Enter" || e.key == " " || e.key == "Spacebar") {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+
+            if (hasSummary) {
+                heading.ariaExpanded = "false"
+
+                var summary = wrapper.querySelector(".factsheet-summary")
+
+                summary.role = "term";
+                summary.setAttribute("aria-label", "Section summary");
+                summary.convertTo("summary");
+
+                // summary is no longer a valid element, we have to find it again
+                var convertedSummary = wrapper.querySelector(".factsheet-summary")
+
+                $(convertedSummary).click(function (e) {
+                    var d = $(e.target).closest("details")[0]
+                    var h = d?.previousSibling
+                    if (h.tagName === "H2" || h.tagName === "H3") {
+                        $(h).toggleClass("heading-collapsed")
+                        h.ariaExpanded = h.ariaExpanded === "false";
+
+                    }
+                });
+
+                wrapper.convertTo("details");
+            }
+
+            if (isProfessionalFS && !isRefOrDisc) {
+                heading.classList.add("heading-collapsed")
+            }
+        }
+    }
+}

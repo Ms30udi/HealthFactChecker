@@ -1,0 +1,65 @@
+﻿
+/* great reference: https://www.smashingmagazine.com/2011/11/how-to-set-up-a-print-style-sheet/ */
+@media print {
+    @page {
+        margin: 0.5cm;
+    }
+
+    body {        
+        font-size: 1.2em;
+        line-height: 1.3;
+        border-top:0;
+    }
+    #header {
+        height:auto;
+    }
+    h1, h1.subtitle {
+        font-size: 24pt;
+        font-family:Arial, sans-serif;
+    }
+
+    h2 {
+        font-size: 14pt;
+        margin-top: 25px;
+    }
+    .center a[href^="http://"]:after, .center a[href^="https://"]:after {
+        content: " (" attr(href) ")";
+        font-size: 90%;
+    }
+    #social-footer a[href^="http://"]:after, #social-footer a[href^="https://"]:after {
+        content: " (" attr(href) ")";
+        font-size: 90%;
+    }
+    .social {
+        width:auto;
+    }
+    a[href^="#"]:after {
+        display: none;
+    }
+    a {
+        word-wrap: break-word;
+    }
+
+    a {
+        color: #000;
+    }
+    #pnlImg {
+        display:none;
+    }
+    #banner, #header .spanishbutton, #section-header, #gnav, #search, .factsheet-toc, .apst-wrapper, .collapse, .externallink, #tagline, #footertext, #slideshow {
+        display: none !important;
+    }
+    #fstitleborder {
+        padding-top:0;
+    }
+    .ingredients tr:first-of-type {
+        display: none;
+    }
+    .ingredients .collapsed {
+        display: table-row !important;
+    }
+    .ingredients .light, .ingredients .dark {
+        display: none !important;
+    }
+
+}

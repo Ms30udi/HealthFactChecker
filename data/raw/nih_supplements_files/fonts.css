@@ -1,0 +1,51 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap&subset=latin,latin-ext');
+
+body {
+    font-family: 'Roboto', 'Neue Helvetica', Helvetica, Arial, sans-serif;
+    font-size: 100%; /* attributes copied from level0.css for pop.master */
+    line-height: 1.5em;
+    color: hsl(0, 0%, 20%);
+}
+
+INPUT, TEXTAREA, SELECT {
+    font-family: 'Roboto', 'Neue Helvetica', Helvetica, Arial, sans-serif;
+    font-size: 100%;
+}
+
+.txt_os12 {
+    font-weight: 400;
+    font-size: 12px;
+}
+.txt_os12_lh28_sb {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 28px !important;
+}
+.txt_os16 {
+    font-weight: 400;
+    font-size: 16px;
+}
+.txt_os14_lh18 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px !important;
+}
+.txt_g12 {
+    font-weight: normal;
+    font-size: 12px;
+}
+.txt_g17_lh28_bold {
+    font-weight: bold;
+    font-size: 133%; 
+    line-height: 1em !important;
+}
+.txt_t13_lh20 {
+    font-weight: normal;
+    font-size: 100%;
+    line-height: 20px !important;
+}
+.txt_t13_lh16 {
+    font-weight: normal;
+    font-size: 100%;
+    line-height: 1.25em !important;
+}

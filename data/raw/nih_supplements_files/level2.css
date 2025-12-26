@@ -1,0 +1,206 @@
+#center {
+	margin-top:0;
+    overflow:hidden;
+}
+
+h1.subtitle, h3.subtitle {
+    /*text-transform:uppercase !important;*/
+    margin-top: 0px !important;
+    color: hsl(210, 62%, 33%) !important;
+}
+.factsheet_h3 {
+    font-size: 1.17em;
+    font-weight:bold;
+    margin-top:10px;
+}
+h4 {
+    margin: -5px 0;
+}
+#buttons img{
+	padding:0;
+	margin:0;
+	float:none;
+}
+
+#content{
+	background: white;
+	color: Black;
+	/* position:relative; "relative" won't let the dropdown menus overflow in IE6&7 */
+	overflow: visible;
+	height:auto;
+    border-bottom: none;
+    /*background-color: #fff;
+    background-image: none;*/
+}
+
+#content h1 {
+    padding-top: 20px;
+}
+
+#content h4, #content h5 { /* factsheets headings within the document */
+	margin: 8px auto 0px auto;
+}
+
+#content ul, #content ol {
+	margin: 0px 0px 10px 0px; 
+	padding-left: 40px;
+}
+
+#center{
+	/* position:relative; "relative" won't let the dropdown menus overflow in IE6&7 */
+}
+
+#alphanav 
+{
+	position: relative;
+	left: 30%;
+	white-space: nowrap;
+	height: 20px;
+	padding-bottom: 10px;
+    clear: right; /* both; */
+}
+
+#alphanav ul 
+{
+	margin: 0px;
+	padding-left: 0px;
+	height: 20px;
+}
+
+#alphanav li
+{
+	float:left;
+	list-style-type:none;
+	font-size: 16px;
+	font-weight: bold;
+	padding:0px;
+	/* font-family: Arial, Helvetica, Verdana, Sans-Serif !important; */
+}
+
+#alphanav a { color: Black; }
+	
+#content .alphablock{
+	list-style-type:none;
+    font-size: 133%; /* 16px; */
+	position:relative;
+	width: 395px;
+	float: left;
+}
+
+#content h4.alphaIndex{
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	display: block;
+	font-weight: bold;
+}
+
+#content .alphablock li {
+    font-size: 109%; /* 13px; */
+	color:#000;
+	list-style-type:none;
+	font-weight:bold;
+	padding:0px;
+	margin:0px;
+	/* font-family: Arial, Helvetica, Verdana, Sans-Serif !important; */
+}
+
+#content .alphablock li a { color: Black; }
+
+.level3 li{
+	list-style-type:disc;
+	font-weight:normal;
+	margin:0;
+	padding:0;
+	font-family:serif;
+}
+
+#content .supplement-inset-box {
+	float: right;
+    width: 300px;
+    max-width: 50%;
+}
+
+#content .supplement-inset-box ul 
+{
+	padding-left: 20px;
+}
+
+#content .supplement-inset-box li {
+	font-size:13px;
+	color:#000;
+	font-weight:bold;
+	padding:0px;
+	margin:0px;
+}
+
+/* ======================================= */
+/* = Items for Supplement Resource List = */
+/* ======================================= */
+
+.resources h4{
+    font-size: 109%; /* 14px; */
+	margin:0px;
+}
+
+.resources h3 {
+	margin-bottom: 12px;
+}
+.resources 
+{
+	font-size: 100% /* 12px */ !important;
+	color: Black;
+}
+
+	.resources a {
+		font-weight: bold;
+		text-decoration: underline;
+		color: hsl(210, 62%, 33%);
+		color: -webkit-link;
+	}
+
+.resources a.source {
+	font-weight: normal;
+}
+
+.resources ul{
+	margin-top:0px;
+}
+
+.resources li {
+	margin-bottom: 12px;
+}
+
+#content div.resources ul ul {
+	margin-bottom: 0px;
+}
+
+#content div.resources li li {
+	/* font-family: 'Times New Roman', Georgia; */
+}
+.resources li li {
+	font-style: italic;
+	font-weight: normal;
+}
+a.internalnav{
+    font-size: 78%; /* 10px; */
+}
+
+div.historical {
+	padding: 0 15px;
+	color: black;
+	margin-top: 1em;
+}
+
+	div.historical p {
+		padding: .5em;
+		background-color: hsl(210, 5%, 83%);
+		margin-bottom: 0;
+	}
+
+.old h1.subtitle, .old h3.subtitle {
+	color: hsl(0, 0%, 55%) !important;
+}
+.old a {
+	color: hsl(0, 0%, 55%);
+}

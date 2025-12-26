@@ -1,0 +1,212 @@
+class Reference {
+    constructor(groups) {
+        this.name = groups["name"];
+        this.year = groups["year"];
+        this.id = groups["id"];
+    }
+
+    toString() {
+        return `${this.name}, ${this.year} #${this.id}`;
+    }
+
+    getKey() {
+        return `${this.name}|${this.year}|${this.id}`;
+    }
+} // end Reference class
+
+$(document).ready(function () {
+    var factSheet = document.getElementById("fact-sheet");
+    var citationsSection = document.querySelector("section[id$=divCitations]");
+    if (!factSheet || !citationsSection) return;
+
+    var citationContainer = citationsSection.querySelector("ol");
+    var citations = Array.from(citationContainer.querySelectorAll("li"));
+
+    // Find all reference blocks in the fact sheet
+    var refBlockPatt = /\{.*?\}/g;
+    var refPatt = /;?(?<name>[^,]*?), (?<year>\d{4}) #(?<id>\d+)/g;
+
+    var references = new Map(); // Store unique references
+    var referenceOrder = []; // Track the order of unique references
+
+    var refBlocks = factSheet.innerHTML.match(refBlockPatt);
+    if (refBlocks) { // We're in a new factsheet
+
+        // Remove existing citation elements
+        citationContainer.innerHTML = "";
+
+        for (var i in refBlocks) {
+            var refBlock = refBlocks[i];
+            refBlock = refBlock.replace(/^\{|\}$/g, ""); // Remove surrounding curly braces
+
+            var citationNumbers = [];
+            var citationDetails = [];
+            var refs = [];
+            for (var match of refBlock.matchAll(refPatt)) {
+                var ref = new Reference(match.groups);
+                var key = ref.getKey();
+
+                var citationNumber;
+
+                // Only add the citation if the reference is new
+                if (!references.has(key)) {
+                    citationNumber = referenceOrder.length + 1;
+                    references.set(key, citationNumber);
+                    referenceOrder.push(ref); // Maintain order (aye captain)
+                } else {
+                    // Not new, get the number
+                    citationNumber = references.get(key);
+                }
+
+                // Numbers and Details will always be used in the hover
+                citationNumbers.push(citationNumber);
+                citationDetails.push(ref.toString());
+                refs.push(ref);
+            }
+
+            // Convert numbers into a citation range format like "[1,3-5]"
+            var citationText = formatCitationNumbers(citationNumbers);
+            var referenceId = `hover-${citationNumbers.join("-")}-${i}`;
+
+            // Did someone notice? I bet someone noticed. Welcome back.
+            var citationLink = `<a href="#en${references.get(refs[0].getKey())}" class="citation" data-hover-id="${referenceId}">${citationText}</a>`;
+
+            // Create a hidden div for the hover content
+            var hoverDiv = document.createElement("span");
+            hoverDiv.id = referenceId;
+            hoverDiv.className = "hover-content";
+            hoverDiv.style.display = "none";
+
+            hoverDiv.innerHTML = refs.map(r => {
+                var refId = `en${r.id}`;
+                var matchingCitation = citations.find(li => li.id === refId);
+                var cn = references.get(r.getKey());
+
+                if (!matchingCitation) {
+                    console.log(`Citation #${cn} not found.`)
+                    return `<span>${cn}. <i>Citation not found.</i></span>`;
+                }
+
+                return `<span>${cn}. ${matchingCitation.innerHTML}</span>`;
+            }).join("<br>");
+
+            // Replace the block in factSheet with the formatted link
+            factSheet.innerHTML = factSheet.innerHTML.replace(`{${refBlock}}`, citationLink + hoverDiv.outerHTML);
+        }
+
+        // Add back only matching citations in order
+        referenceOrder.forEach((r, index) => {
+            var refId = `en${r.id}`;
+            var matchingCitation = citations.find(li => li.id === refId);
+            var citId = `en${references.get(r.getKey())}`
+            if (matchingCitation) {
+                matchingCitation.id = citId;
+                citationContainer.appendChild(matchingCitation);
+            } else {
+                console.log("Error: Citation not found for reference #" + citId);
+            }
+        });
+    } else { // Old factsheet
+        var references = factSheet.querySelectorAll("a[href^='#en']");
+
+        for (var ref of references) {
+
+            // Get the citation numbers from the reference
+            // We use textContent because innerText is blank if the element is not visible (like in a collapsed summary)
+            var refIds = ref.textContent.split("-").map(Number); 
+
+            // Fill the span. "1-3" becomes "1, 2, 3"
+            if (refIds.length > 1) {
+                refIds = Array.from({ length: refIds[1] - refIds[0] + 1 }, (_, j) => refIds[0] + j);
+            }
+
+            var hoverId = `reference-${refIds.join("-")}`
+
+            var dupes = document.querySelectorAll(`[id^='${hoverId}']`)
+
+            if (dupes.length > 0) {
+                hoverId += "_" + (parseInt(dupes.length) + 1);
+            }
+
+            // Create a hidden div for the hover content
+            var hoverDiv = document.createElement("span");
+            hoverDiv.id = hoverId;
+            hoverDiv.className = "hover-content";
+            hoverDiv.style.display = "none";
+
+            hoverDiv.innerHTML = refIds.map(ri => {
+                var matchingCitation = citations[ri - 1];
+                if (!matchingCitation) {
+                    console.log(`Citation #${ri} not found.`)
+                    return `<span>${ri}. <i>Citation not found.</i></span>`;
+                }
+
+                return `<span>${ri}. ${matchingCitation.innerHTML}</span>`;
+            }).join("<br>");
+
+            // Attach the hoverDiv to the reference
+            ref.parentNode.insertBefore(hoverDiv, ref.nextSibling);
+
+            ref.classList += (" citation");
+            ref.dataset.hoverId = hoverId;
+        }       
+    }
+
+    // Add hover event listeners
+    $(".citation").hover(
+        function () {
+            var hoverId = $(this).data("hover-id");
+            var hoverDiv = $("#" + hoverId);
+
+            // Get the position of the hovered link
+            var linkPosition = $(this).offset();
+            var containerWidth = $("#container").width();
+            var containerLeft = $("#container").css("margin-left").replace("px", "")
+            var linkHeight = $(this).outerHeight();
+
+            // Position the hover div next to the link
+            hoverDiv.css({
+                top: linkPosition.top + linkHeight + 5 + "px", // Slightly below the link
+                left: Math.min(linkPosition.left - containerLeft, containerWidth - 400) + "px", // Align with the link's left edge
+                zIndex: 1000 // Ensure it overlaps other elements
+            });
+
+            hoverDiv.fadeIn("fast");
+        },
+        function () {
+            var hoverId = $(this).data("hover-id");
+            var hoverDiv = $("#" + hoverId);
+
+            hoverDiv.fadeOut("slow")
+        }
+    );
+
+    // Add a hover event listener to the reference to prevent fading
+    $(".hover-content").hover(function () {
+
+        $(this).stop(true);
+        $(this).fadeIn("fast");
+    },
+        function () {
+            $(this).fadeOut("slow")
+        }
+    )
+
+});
+
+// Function to format citation numbers into a range (e.g., [2-4])
+function formatCitationNumbers(numbers) {
+    numbers.sort((a, b) => a - b); // Sort numbers
+    let ranges = [], start = numbers[0], end = start;
+
+    for (let i = 1; i < numbers.length; i++) {
+        if (numbers[i] === end + 1) {
+            end = numbers[i]; // Extend range
+        } else {
+            ranges.push(start === end ? `${start}` : `${start}-${end}`);
+            start = end = numbers[i]; // Start a new range
+        }
+    }
+    ranges.push(start === end ? `${start}` : `${start}-${end}`);
+    return `[${ranges.join(", ")}]`;
+}

@@ -1,0 +1,192 @@
+#main{
+	/* float:right; */
+	position: static; /* Required for IE7 and under for overlay dropdown menus (topnav) */
+	/* width:642px; */
+    margin-left: 20.7em; /* = sidemenu width + left pad + right pad */
+}
+
+#main UL {
+    margin-top: 0px;
+}
+
+#container p {
+    font-size: 100%; /* I think I need to break this out because I'm no longer using #center */
+}
+	
+#center{
+	/* width:500px; */
+    width:100%;
+	float:left;
+	margin-top:10px;
+	clear: left;
+}
+.black {
+    color:#000 !important;
+}
+.center {
+    padding:15px 15px 0 15px;
+}
+.center a {
+    text-decoration: underline 1px;
+}
+
+#buttons{
+	float: right;
+    margin: -3px 0 0;
+	font-size: 8px;
+}
+
+#buttons DIV.fs {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+#buttons img 
+{
+	border: 0;
+}
+
+.buttons-block {
+    /*width:188px;*/
+    float:right;
+    height:30px;
+}
+.buttons-block .buttons-block-text {
+    float: left;
+    margin-right: 5px;
+}
+.buttons-block .buttons-block-shareicon {
+    float: right;
+    width: 20px;
+}
+
+/* ===================== */
+/* = Unique To level 1 = */
+/* ===================== */
+
+.breadcrumbs {
+    padding: 5px 15px 0 15px;
+}
+
+#content{
+	overflow: hidden;
+	/* float: left;  needed for IE6/7 to fill out the block */
+	width: 100%;
+    font-size: 94%; /* 12px; */ /* needed for factsheets which don't have <p></p> */
+    /* margin-bottom:15px; */
+}
+
+#content img.main{
+	float:left;
+	margin-right:25px;
+}
+
+    #content h1 {
+        color: #fff;
+        text-transform: none;
+        font-size: 2.5em;
+        margin: 10px 0px 5px 0px;
+        line-height: 1.1em;
+        padding: 5px 0 0 15px;
+        font-weight: 700;
+    }
+
+        #content h1.sechead {
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 150%;
+            font-family: 'Montserrat', 'Arial Rounded MT', sans-serif;
+            margin: 10px 0px 5px 0px;
+            line-height: 28px;
+            padding: 5px 0 0 20px;
+            font-weight: 700;
+        }
+
+        #content h2 {
+            /* text-transform: uppercase; */
+            font-size: 133%; /* 16px; */
+            margin: 10px 0px 5px 0px;
+            padding: 0px;
+            font-weight: normal;
+        }
+
+#content p, #content li, #content td, #center p, #center li {
+    font-size: 109%; /* 13px;  */
+}
+
+#content p, #center p {
+	padding-bottom: 10px;
+    font-size: 109%; /* 13px; */
+    color:rgb(51,51,51);
+	margin:0px 0px 0px 0px;
+	height: 100%;
+}
+
+#content h3.boxcaption, #content h1.boxcaption {
+	margin-right: 25px;
+}
+
+#content p.boxcaption {
+	margin-top: 5px;
+	margin-right: 25px;
+    line-height:20px;
+    color:rgb(51,51,51);
+    font-weight: bold;
+}
+
+#content p.boxcaption a {
+
+	text-decoration: underline;
+}
+
+.section {
+    padding: 0 10px 10px 10px;
+    width: 31%; /*45% for two columns; 31% for 3 columns*/
+    float: left;
+    border-left: 1px solid #ccc;
+}
+
+    .section p {
+        padding-bottom: 25px;
+        border-bottom: 1px solid #ccc;
+    }
+    .imgbox {
+        height: 125px;
+        width: 125px;
+        float: right;
+        overflow: hidden;
+        padding: 0 0 5px 5px;
+    }
+.section img {
+    max-height: 125px;
+}
+
+.section h3{
+	/* text-transform: uppercase; */
+    font-size: 109%; /* 14px; */
+	font-weight:bold;
+	margin: 1px 0px 3px 0px;
+	/* height: 21px; doesn't allow text to wrap if you set height */
+}
+/*
+.section p{
+	margin-top:0px;
+	font-family:times serif;
+	font-size:13px;
+}
+.section a{
+	font-family:Helvetica, Verdana, Arial, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+}*/
+
+.center img {
+    max-width:600px;
+}
+
+.video_es {
+    float: right; 
+    width: 560px; 
+    padding-left: 10px;
+}

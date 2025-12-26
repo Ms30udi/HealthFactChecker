@@ -1,0 +1,55 @@
+.section h2 {
+    font-size: 109%;
+    font-weight: bold;
+    margin: 1px 0px 3px 0px;
+}
+
+#section-header {
+    border-top: solid 6px hsl(210, 62%, 33%);
+    padding: 15px 20px;
+    font-weight: 300; /*light*/
+    font-size: 22px;
+    min-height: 20px;
+    font-family: 'Montserrat', 'Arial Rounded MT', sans-serif;
+    color: #fff;
+    position: relative;
+    /*background-color: hsl(210, 62%, 67%); /*nih grey: hsl(230, 3%, 40%) */
+    background-image: linear-gradient(left, hsl(210, 62%, 33%) 30%, hsl(210, 0%, 100%) 100%);
+    background-image: -webkit-linear-gradient(left, hsl(210, 62%, 33%) 30%, hsl(210, 0%, 100%) 100%);
+    background-image: -moz-linear-gradient(left, hsl(210, 62%, 33%) 30%, hsl(210, 0%, 100%) 100%);
+    background-image: -ms-linear-gradient(left, hsl(210, 62%, 33%) 30%, hsl(210, 0%, 100%) 100%);
+    background-image: -o-linear-gradient(left, hsl(210, 62%, 33%) 30%, hsl(210, 0%, 100%) 100%);
+}
+
+.buttons-block a {
+    padding-left:10px;
+}
+
+#header{
+	border-bottom-color:hsl(210, 62%, 33%);
+}
+h1.subtitle, h3.subtitle{
+	color:hsl(210, 62%, 33%);
+}
+
+#content {
+    /*border-bottom: 6px solid hsl(210, 62%, 33%);*/
+    background-color: hsl(210, 32%, 87%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(hsl(210, 32%, 80%)), to(hsl(210, 32%, 87%)));
+    background-image: -webkit-linear-gradient(top, hsl(210, 32%, 80%), hsl(210, 32%, 87%));
+    background-image: -moz-linear-gradient(top, hsl(210, 32%, 80%), hsl(210, 32%, 87%));
+    background-image: -o-linear-gradient(top, hsl(210, 32%, 80%), hsl(210, 32%, 87%));
+    background-image: linear-gradient(to bottom, hsl(210, 32%, 80%), hsl(210, 32%, 87%));
+}
+
+#footer a, #content a:hover, p.caption {
+	color:hsl(210, 62%, 33%);
+}
+
+#content li span, #content a {
+	color: Black;
+}
+
+.section a, a.internalnav, #alphanav {
+	color:hsl(210, 62%, 33%);
+}
