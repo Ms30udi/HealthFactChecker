@@ -1,18 +1,16 @@
+"""
+HealthFactCheck - Streamlit UI
+Refactored to use LangGraph workflow for fact-checking.
+"""
+
 import streamlit as st
 import json
 from pathlib import Path
 from datetime import datetime
 from instagram_audio_extractor import extract_reel_transcript
-from fact_checker import fact_check_claims
-from groq import Groq
+from fact_checker import fact_check_claims, generate_summary, run_full_workflow
 import plotly.graph_objects as go
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
-
-# Configure Groq for summary
-groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 # Page config
 st.set_page_config(
@@ -60,34 +58,6 @@ def save_history(history):
         json.dump(history, f, ensure_ascii=False, indent=2)
 
 
-def generate_summary(transcript: str, language: str = "ar") -> str:
-    """Generate a summary of the video transcript using Groq."""
-    lang_prompts = {
-        "ar": "لخص هذا النص في 2-3 جمل، مع التركيز على المواضيع الصحية الرئيسية:",
-        "en": "Summarize this text in 2-3 sentences, focusing on the main health topics:",
-        "fr": "Résumez ce texte en 2-3 phrases, en vous concentrant sur les principaux sujets de santé:"
-    }
-    
-    prompt = f"{lang_prompts.get(language, lang_prompts['ar'])}\n\n{transcript}"
-    
-    try:
-        response = groq_client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[
-                {"role": "system", "content": "أنت خبير في تلخيص المحتوى الصحي بشكل واضح ومختصر."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.3,
-            max_tokens=300
-        )
-        
-        return response.choices[0].message.content.strip()
-        
-    except Exception as e:
-        print(f"[ERROR] Summary generation failed: {e}")
-        return "Could not generate summary."
-
-
 # Main interface
 with st.container():
     url = st.text_input("🔗 Instagram Reel URL", placeholder="https://www.instagram.com/reel/...")
@@ -100,17 +70,23 @@ with st.container():
 if analyze_btn and url:
     with st.spinner("⏳ Processing..."):
         try:
-            # Step 1: Extract transcript
+            # Step 1: Extract transcript (uses Gemini/Groq Whisper)
             st.info("📝 Extracting transcript...")
             transcript = extract_reel_transcript(url)
             
-            # Step 2: Generate summary
+            # Step 2: Run LangGraph workflow
+            # Option A: Use individual functions (more control)
             st.info("📋 Generating summary...")
             summary = generate_summary(transcript, language=selected_lang)
             
-            # Step 3: Fact check
             st.info("🔍 Fact-checking claims...")
             result = fact_check_claims(transcript, language=selected_lang)
+            
+            # Option B: Use full workflow (uncomment to use)
+            # st.info("🔄 Running LangGraph workflow...")
+            # workflow_result = run_full_workflow(url, transcript, language=selected_lang)
+            # summary = workflow_result.get("summary", "")
+            # result = {"claims": workflow_result.get("verified_claims", [])}
             
             # Save to history
             history = load_history()
